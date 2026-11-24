@@ -1,0 +1,61 @@
+
+#############  PART 4 : express orders with an aging rule  #############
+W = 10 + d3 = 10 + 9 = 19 min; orders 3, 6, 9 are express
+
+[4b] two queues, deadline rule (my design)
+    i  kind  arrive  cook  start  finish  wait
+   ---------------------------------------------
+    1    R       2      4      2       6     0
+    2    R       4      5      6      11     2
+    3    E       7      6     11      17     4
+    4    R       9      7     28      35    19
+    5    R      10      3     35      38    25
+    6    E      12      4     17      21     5
+    7    R      15      5     38      43    23
+    8    R      17      6     43      49    26
+    9    E      18      7     21      28     3
+   10    R      20      3     49      52    29
+   ---------------------------------------------
+
+     plain FIFO on the same stream
+    i  kind  arrive  cook  start  finish  wait
+   ---------------------------------------------
+    1    R       2      4      2       6     0
+    2    R       4      5      6      11     2
+    3    E       7      6     11      17     4
+    4    R       9      7     17      24     8
+    5    R      10      3     24      27    14
+    6    E      12      4     27      31    15
+    7    R      15      5     31      36    16
+    8    R      17      6     36      42    19
+    9    E      18      7     42      49    24
+   10    R      20      3     49      52    29
+   ---------------------------------------------
+
+     alternative: late aging (promote only after waiting >= W)
+    i  kind  arrive  cook  start  finish  wait
+   ---------------------------------------------
+    1    R       2      4      2       6     0
+    2    R       4      5      6      11     2
+    3    E       7      6     11      17     4
+    4    R       9      7     28      35    19
+    5    R      10      3     35      38    25
+    6    E      12      4     17      21     5
+    7    R      15      5     38      43    23
+    8    R      17      6     43      49    26
+    9    E      18      7     21      28     3
+   10    R      20      3     49      52    29
+   ---------------------------------------------
+
+[4b] comparison (minutes)
+    policy               express  regular   all    worst regular  worst express
+    plain FIFO            14.33    12.57   13.10        29             24
+    deadline rule          4.00    17.71   13.60        29              5
+    late aging             4.00    17.71   13.60        29              5
+
+[4b] sensitivity: same stream, smaller allowance W (mean express wait)
+    W    deadline rule   late aging   (FIFO)
+    3       11.33         20.00      (14.33)
+    5        7.33         20.00      (14.33)
+    9        6.33         12.00      (14.33)
+   19        4.00          4.00      (14.33)

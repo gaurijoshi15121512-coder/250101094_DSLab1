@@ -1,0 +1,37 @@
+
+#############  PART 2 : queues - kitchen dispatch  #############
+K = 3 + (d4 mod 3) = 3 + (4 mod 3) = 4
+
+deriving the stream:
+  i=1  j=2  t = 2(1) + (0 mod 3) =  2   p = 3 + ((1+0) mod 5) = 4
+  i=2  j=3  t = 2(2) + (9 mod 3) =  4   p = 3 + ((2+0) mod 5) = 5
+  i=3  j=4  t = 2(3) + (4 mod 3) =  7   p = 3 + ((3+0) mod 5) = 6
+  i=4  j=1  t = 2(4) + (1 mod 3) =  9   p = 3 + ((4+0) mod 5) = 7
+  i=5  j=2  t = 2(5) + (0 mod 3) = 10   p = 3 + ((5+0) mod 5) = 3
+  i=6  j=3  t = 2(6) + (9 mod 3) = 12   p = 3 + ((6+0) mod 5) = 4
+  i=7  j=4  t = 2(7) + (4 mod 3) = 15   p = 3 + ((7+0) mod 5) = 5
+  i=8  j=1  t = 2(8) + (1 mod 3) = 17   p = 3 + ((8+0) mod 5) = 6
+  i=9  j=2  t = 2(9) + (0 mod 3) = 18   p = 3 + ((9+0) mod 5) = 7
+  i=10 j=3  t = 2(10) + (9 mod 3) = 20   p = 3 + ((10+0) mod 5) = 3
+
+[2c] FIFO kitchen, rail capacity K = 4
+    i  kind  arrive  cook  start  finish  wait
+   ---------------------------------------------
+    1    R       2      4      2       6     0
+    2    R       4      5      6      11     2
+    3    R       7      6     11      17     4
+    4    R       9      7     17      24     8
+    5    R      10      3     24      27    14
+    6    R      12      4     27      31    15
+    7    R      15      5     31      36    16
+    8    R      17      6     36      42    19
+    9    R      18      7     42      49    24
+   10    R      20      3     49      52    29
+   ---------------------------------------------
+   mean waiting time = 13.10 min
+
+[2d] same stream, different rail sizes
+    K    mean wait   most tickets on rail   most tickets in line
+    1      13.10             1                     5
+    4      13.10             4                     2
+   10      13.10             6                     0
